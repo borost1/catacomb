@@ -1,5 +1,10 @@
+from typing import List, Any
+
 
 class player:
+    lives = 3
+    game_level: ''
+
     def __init__(self):
         self.name = '',
         self.hp = 100,
@@ -9,7 +14,7 @@ class player:
         self.location = ''
         self.solved_places = {1: False, 2: False, 3: False, 4: False, 5: False, 6: False, 7: False, 8: False, 9: False,
                           10: False, 11: False, 12: False}
-        self.game_level = []
+        
         # this might not be right in here, but I def. need it somewhere,
     # id of screens and bulian, need to access it in higher levels as well, eleg lehet felsorolni hogy mik lettek
     # megoldva,
@@ -17,6 +22,8 @@ class player:
 myPlayer = player()
 
 class Obstacle:
+  level = ''
+
   def __init__(self, name, type, level):
         self.name = name
         self.level = level
@@ -25,9 +32,10 @@ class Obstacle:
         self.type = type
         self.is_active = True
 
-    def __repr__(self):
-    return 'This obstacle is called {name}, you are on level {level}, facing a {type} type creature!'.format \
-            (level = self.level, name = self.name, health = self.health, type = self.type)
+  def __repr__(self):
+      return 'This obstacle is called {name}, you are on level {level}, facing a {type} type creature!'.format \
+        (level = self.level, name = self.name, health = self.health, type = self.type)
+
 
 a_o = Obstacle("Skeleton", "Death", 7)
 b_o = Obstacle("Sphynx", "Riddle", 0)
