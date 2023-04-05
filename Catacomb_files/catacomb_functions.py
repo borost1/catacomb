@@ -3,42 +3,122 @@ import screens
 from inventory import player
 import inventory
 from inventory import Obstacle
-
+import main
 import random
+import asyncio
+
+random_obstacle = None  # define the variable outside the function
 
 
-# modify the function to return a string with the screen information
 def create_random_world1_screen():
+    global random_obstacle  # declare the variable as global inside the function
     """creates a random screen, importing from the screens file"""
     title = random.choice(screens.titles)
     description = random.choice(screens.description)
     obstacle = random.choice(screens.obstacles)
+    obstacle_life = random.randint(0, 10)
+    obstacle_type = random.choice(screens.obstacle_types)
     doors = random.sample(screens.doors, 4)
     screen_id = random.randint(1000, 9999)
     screens.screens_id.append(screen_id)  # append screen_id to the list
     # create a string with the screen information
-    screen_str = f"You are in {title}. This place is {description} You see a {obstacle}, what do you do?"
+    screen_str = f"You are in {title}. This place is {description} You see a {obstacle}, it has {obstacle_life} life points." \
+                 f"It seems like it is a {obstacle_type}. What do you do?"
+    random_obstacle = Obstacle(obstacle, obstacle_type, 1, obstacle_life)
     # return the string
     return screen_str
 
+    # after an unsuccessful attack or befriend, this gives the player the choice to do an action again
 
 
+def another_chance():
+    global another_chance_action_choice
+    another_chance_action_str = input(
+        'It seems like this creature is tougher than it looks, you can choose to attack or befriend them again')
+    flag = False
+    while not flag:
+        if another_chance_action_str.lower() not in main.action_choices:
+            print('Invalid choice. Please choose "attack" or "befriend".')
+            another_chance_action_str = input('Which will it be? ')
+        else:
+            if another_chance_action_str.lower() == main.action_choices[0]:
+                print(attack_world1())
+            elif another_chance_action_str.lower() == main.action_choices[1]:
+                print(befriend_world1())
+            flag = True
 
 
+# action functions related to obstacles
 
-# call the function to generate a random screen and print the result
-print(create_random_world1_screen())
+
+def attack_world1():
+    attack_power = random.randint(1, 10)
+
+    if attack_power >= random_obstacle.obstacle_life:
+        print("You vanquished your enemy!")
+    else:
+        obstacle_attack()
+
+
+def befriend_world1():
+    random_number = random.randint(0, 5)
+
+    if random_number == 0:
+        new_obstacle = Obstacle("Obstacle " + str(len(screens.befriended_obstacles) + 1))
+        screens.befriended_obstacles.append(new_obstacle)
+        print("You became friends with " + new_obstacle.name + ", how lovely!")
+    elif random_number == 1:
+        print("You became associates, how interesting!")
+    elif random_number == 2:
+        print("You know each other from now on! Awkwardly wave next time you see each other on the bus!")
+    else:
+        print("They don't like you!")
+        obstacle_attack()
+
+
+def which_door_opens():
+    # Randomly select a string to print
+    loop = 1
+
+    flag = False  # control mechanism, to exit the loop as conditions are met, common name for that
+
+    while not flag:
+        if random.random() < 0.75:
+            door_closed_str = random.choice(screens.door_closed_strings)
+            print(door_closed_str)
+            choice = input('Which door will you take?')
+            while choice.lower() not in main.door_choices:
+                print('Invalid choice. Please choose A, B, C, or D.')
+                choice = input('Which door will you take?')
+            chosen_door = main.door_choices[choice.lower()]
+            print(f'You chose {chosen_door}.')  # embed the value of the chosen_door inside the string
+        else:
+            door_open_str = random.choice(main.door_open_strings)
+            print(door_open_str)
+            flag = True  # set the flag to True to exit the while loop
+
+    while loop == 1:
+        print(create_random_world1_screen())
+        break
+
+
+def obstacle_attack():
+    damage = random.randint(0, 5)
+    inventory.player.hp -= damage
+    print(f"The enemy strikes for {damage} damage! Your HP is now {inventory.player.hp}.")
+    if damage >= inventory.player.hp:
+        print("You vanquished your enemy!")
+    else:
+        another_chance()
 
 
 screen = {
-        "id": screens.screens_id,
-        "title": screens.titles,
-        "description": screens.description,
-        "obstacle": screens.obstacles,
-        "doors": screens.doors
-    }
-
-
+    "id": screens.screens_id,
+    "title": screens.titles,
+    "description": screens.description,
+    "obstacle": screens.obstacles,
+    "doors": screens.doors
+}
 
 
 def lose_health(self, amount):
@@ -63,6 +143,15 @@ def level_up_obstacles(defeated_obstacles):
         if count_list_elements(defeated_obstacles) > player.game_level:
             Obstacle.level += 4
     return Obstacle.level
+
+
+# functions related to GAME OVER
+
+async def check_player_hp():
+    while True:
+        await asyncio.sleep(1)  # Check player's HP every second
+        if inventory.player.hp < 0:
+            game_over()
 
 
 def game_over():

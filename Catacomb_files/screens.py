@@ -69,9 +69,9 @@ description = ['so vague, you cant even tell what shape does it have', 'cold, da
 obstacles = ['Sufi', "Sphynx", 'Skeleton', 'Ghost', 'Frog', "Portuguese man o' war", "Sandstorm",
              "Sandworm", "Cursed Tree", "Giant Scorpion", "Maze", "Pit Trap", "Sphinx", "Genie", "Ghoul", "Efreet",
              "Jinn",
-             "Djinni", "Ifrit", "Vampire", "Mummy from the Brendan Fraser movie", "Siren", "Harpies", "Minotaur",
+             "Djinni", "Ifrit", "Vampire", "Mummy from the Brendan Fraser movie", "Siren", "Harpie", "Minotaur",
              "Cyclops", "Hydra",
-             "Basilisk", "Chimera", "Griffin", "Dragon", "Demon", "Zombie", "Wraith", "Ghost", "Poltergeist","Shadow",
+             "Basilisk", "Chimera", "Griffin", "Dragon", "Demon", "Zombie", "Wraith", "Ghost", "Poltergeist", "Shadow",
              'Dark Sorcerer',
              'Jinn of the Lamp', 'Cursed Mummy', 'Sand Golem', 'Fire-breathing Dragon', 'Winged Demon',
              'Vicious Scorpion',
@@ -79,7 +79,7 @@ obstacles = ['Sufi', "Sphynx", 'Skeleton', 'Ghost', 'Frog', "Portuguese man o' w
              'Demonic Possession', 'Whirling Dervish',
              'Sandstorm Elemental', 'Bone Dragon', 'Blind Seer', 'Scarab Swarm', 'Nightmare Steed', 'Deathly Scimitar',
              'Giant Spider',
-             'Poisonous Cobra', 'Immortal Ifrit', 'Living Statue', 'Plague-ridden Rats', 'Skeletal Warrior',
+             'Poisonous Cobra', 'Immortal Ifrit', 'Living Statue', 'Plague-ridden Rat', 'Skeletal Warrior',
              'Soul Reaper',
              'Sword-wielding Dervish', 'Twisted Marid', 'Wailing Banshee', 'Bloodthirsty Ghoul', 'Armored Scorpion',
              'Burning Phoenix', 'Death Knight',
@@ -87,7 +87,40 @@ obstacles = ['Sufi', "Sphynx", 'Skeleton', 'Ghost', 'Frog', "Portuguese man o' w
              'Necrotic Zombie',
              'Rampaging Minotaur', 'Screaming Harpy', 'Skeletal Lich', 'Swarm of Scarabs', 'Terror Drake',
              'Vengeful Ghost']
+obstacle_types = [
+    "Existentialist",
+    "Nihilist",
+    "Absurdist",
+    "Skeptic",
+    "Solipsist",
+    "Postmodernist",
+    "Deconstructionist",
+    "Pragmatist",
+    "Moral Relativist",
+    "Determinist",
+    "Free Thinker",
+    "Idealist",
+    "Materialist",
+    "Hedonist",
+    "Stoic",
+    "Cynic",
+    "Epicurean",
+    "Sophist",
+    "Utilitarian",
+    "Transcendentalist"
+]
+door_questions = ["Which portal shall you now venture into?", "Choose your path, which doorway will you enter?",
+                  "Through which entrance shall you pass?", "Which gate shall lead you forward?",
+                  "What hidden threshold will you cross now?", "Which passageway will you dare to explore?",
+                  "Which opening will you enter in the darkness?", "Choose your fate, which door will you take?",
+                  "Which gateway will reveal your destiny?", "Which entryway will you cross in secrecy?",
+                  "What portal will you unlock and enter?", "Which passage will you choose to unveil?",
+                  "Through which mysterious threshold will you pass?", "Which unmarked entrance will you take?",
+                  "Which dark gate will lead you into the unknown?", "What shadowed doorway will you step through?",
+                  "Which path will you take into the abyss?", "Which cryptic portal will you traverse now?",
+                  "Through which enigmatic entryway will you venture?", "Which ominous door will you open and face?"]
 
+befriended_obstacles = []
 doors = ['a', 'b', 'c', 'd']
 game_level = [1, 2, 3, 4]
 door_open_strings = ['The door opens!', "The door is capable of opening!",
