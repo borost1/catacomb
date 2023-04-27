@@ -2,6 +2,11 @@ from asyncore import loop
 from time import sleep
 # import random, cmd, textwrap, sys, os, random, time
 import catacomb_functions
+import inventory
+from tqdm import tqdm
+import asyncio
+from tqdm.asyncio import tqdm, trange
+import itertools
 from Catacomb_files import screens
 from screens import door_questions
 from screens import door_open_strings
@@ -11,7 +16,6 @@ import asyncio
 
 door_choices = {'a': 'first', 'b': 'second', 'c': 'third', 'd': 'fourth'}
 action_choices = ['attack', 'befriend']
-
 if __name__ == '__main__':
 
     print("\"\"\n"
@@ -34,65 +38,61 @@ if __name__ == '__main__':
           "              "
           )
     print()
-    sleep(1.0)
+    sleep(3.0)
     print()
     name = input('How can I call you?')
     print("You wake up in a dark room with 4 doors, labeled as; a, b, c, d.")
-    sleep(2.0)
+    sleep(3.0)
     print("This is not a good place to be, try to get out.")
     print()
-    sleep(2.0)
+    sleep(3.0)
     print()
     print("Good luck, " + name + " and don't fuck it up!")
     print()
-    sleep(2.0)
+    sleep(3.0)
     print()
     choice = input('Which door will you take? These doors are nasty, sometimes you need to try a door more than once.')
     print()
-    sleep(2.0)
+    sleep(3.0)
     print()
 
-    catacomb_functions.which_door_opens()
+    count = 0
+    while inventory.player.hp > 0:
+        total = 0
+        for num in tqdm([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]):
+            sleep(0.25)
+            total = total + num
 
-    print()
-    sleep(1.0)
-    print()
-    choice_action = input('You can attack or befriend them, which will it be?')
-    print()
-    sleep(1.0)
-    print()
+        catacomb_functions.which_door_opens()
+        screen_str, random_obstacle = catacomb_functions.create_random_world1_screen()
 
-    flag = False
-    while not flag:
-        if choice_action.lower() not in action_choices:
-            print('Invalid choice. Please choose "attack" or "befriend".')
-            choice_action = input('Which will it be? ')
-        else:
-            if choice_action.lower() == action_choices[0]:
-                print(catacomb_functions.attack_world1())
+        print()
+        sleep(3.0)
+        print()
+        print('You can attack or befriend them.')
+        print()
+        sleep(3.0)
+        print()
 
-            elif choice_action.lower() == action_choices[1]:
-                print(catacomb_functions.befriend_world1())
-            flag = True
-    print()
-    sleep(2.0)
-    print()
-    next_choice = input(random.choice(screens.door_questions))
-    while not flag:
-        if random.random() < 0.75:
-            door_closed_str = random.choice(door_closed_strings)
-            print(door_closed_str)
-            next_choice = input('Which door will you take?')
-            while choice.lower() not in door_choices:
-                print('Invalid choice. Please choose A, B, C, or D.')
-                next_choice = input('Which door will you take?')
-            chosen_door = door_choices[choice.lower()]
-            print(f'You chose {chosen_door}.')  # embed the value of the chosen_door inside the string
-        else:
-            door_open_str = random.choice(door_open_strings)
-            print(door_open_str)
-            flag = True  # set the flag to True to exit the while loop
-    while loop == 1:
-        print(catacomb_functions.create_random_world1_screen())
-        break
+        catacomb_functions.get_action_choice()
 
+        print()
+        sleep(3.0)
+        print()
+        print()
+        sleep(3.0)
+        print()
+
+        count += 1
+        if count % 3 == 0:
+            print(random.choice(screens.catacomb_facts))
+
+        elif count % 5 == 0:
+            # every 5 times the loop runs
+            catacomb_functions.level_up_obstacles(screens.defeated_obstacles)
+
+        if inventory.player.hp <= 0:
+            break
+
+    # execute another function after the loop is done
+    catacomb_functions.game_over()
