@@ -57,7 +57,7 @@ def another_chance():
             another_chance_action_str = input('Which will it be? ')
         else:
             if another_chance_action_str.lower() == main.action_choices[0]:
-                print(attack_world1())
+                print(attack_world1(obstacle_instance))
             elif another_chance_action_str.lower() == main.action_choices[1]:
                 print(befriend_world1())
             flag = True
@@ -74,24 +74,22 @@ def get_action_choice():
         elif choice_action.lower() == action_choices[0]:
             # create a random obstacle
             screen_str, random_obstacle = create_random_world1_screen()
-            attack_world1(random_obstacle)
+            attack_world1(obstacle_instance)
             return
         elif choice_action.lower() == action_choices[1]:
             print(befriend_world1())
             return
 
 
-def attack_world1(random_obstacle):
-
+def attack_world1(obstacle_instance):
     attack_power = random.randint(1, 5)
 
-    if attack_power >= random_obstacle.health:
+    if attack_power >= obstacle_instance.health:
         print("You vanquished your enemy!")
-        screens.defeated_obstacles.append(random_obstacle)
+        screens.defeated_obstacles.append(obstacle_instance)
     else:
         print(random.choice(screens.attack_sentences))
         obstacle_attack()
-
 
 
 def befriend_world1():
