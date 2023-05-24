@@ -1,3 +1,5 @@
+# multiple imports: többször importálsz több modult, pl asyncio-t
+
 from asyncore import loop
 from time import sleep
 # import random, cmd, textwrap, sys, os, random, time
@@ -37,6 +39,7 @@ if __name__ == '__main__':
           "\n"
           "              "
           )
+    # üres printek helyett "\n" a string végén új sort nyit, plusz print és sleep folyamatosan együtt van, ki lehetne komplett blokkokat szervezni függvénybe
     print()
     sleep(3.0)
     print()
